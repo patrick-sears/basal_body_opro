@@ -1,0 +1,313 @@
+<!doctype html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>wp test</title>
+
+<style type="text/css">
+/* Inside css, comments go like this.  Cool : ) */
+.claa {
+  color: #ff0000;
+  background-color: #0000aa;
+}
+
+.clab {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000099;
+}
+.clac {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-right-style: solid;
+  border-right-width: 3px;
+  border-left-style: solid;
+  border-left-width: 20px;
+  border-left-color: #0055ff;
+}
+
+.clad {
+  background-color: #ffff88;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #5555ff;
+  border-radius: 9px;
+}
+
+.clae {
+  margin-left: 80px;
+}
+
+.claf {
+  text-align: center;
+  font-weight: bold;
+}
+
+ul.clag {
+  background: #5599ff;
+  margin-left:  20px;
+  padding: 20px;
+}
+ul li.clah {
+  background: #ffef99;
+  margin: 5px;
+}
+
+
+
+#ida {
+  color: #0000bb;
+  background-color: #ffdd99;
+}
+
+
+
+
+.code1
+{
+  background-color: #ccffcc;
+  padding:  3px;
+}
+
+
+
+
+</style>
+
+</head>
+
+
+
+
+
+
+
+
+
+
+<!-- _____________________________________________________ -->
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- _____________________________________________________ -->
+<h3>Defining cells.</h3>
+
+<ul>
+<li>The polygons defining a cell should not be closed.
+That is, the last point should not be identical to the first point.
+</li>
+<li>The points don't need to be given in order.
+They will be sorted and reordered by their polar coordinate angle with the range 0 to 2π.
+</li>
+<li>xxx</li>
+<li>xxx</li>
+</ul>
+
+
+
+
+<!-- _____________________________________________________ -->
+<h3>Variables in basbo_main.py.</h3>
+
+
+
+<pre class="code1">
+
+n_ba:          The number of basal bodies.
+xba[], yba[]:  The basal bodies.
+
+n_fa:          The number of basal feet.
+xfa[], yfa[]:  The basal feet.
+
+n_cell:            The number of cells.
+n_cell_plus:       The number of cells + 1.
+                   The extra one represents the area outside any cell.
+cellx[], celly[]:  Polygons points defining cell boundaries (not closed).
+cell_n:            The number of polygon points defining a cell boundary.
+
+cell_cenpx[], cell_cenpy[]:  Centroid of cell polygon points.
+
+cellx_closed[], celly_closed[]:
+Cell polygon points with an added point point identical to the first point.
+This is used for graphing.
+
+n_bf:          Number of basal bodies with a matching foot.
+xc0[], yc0[]:  Basal bodies that have a matching foot.
+xc1[], yc1[]:  The matching feet for each xc0[] yc0[].
+
+ba_ib[]:  For each basal foot xba[] yba[], this contains the index
+          of the matching foot xfa[] yfa[].
+          If that basal foot has not matching foot, it will be -1.
+
+xcdu[] ycdu[]:  Unit vectors for matching (basal body) → (basal foot).
+
+mean_xc mean_yc:  Mean of all (xcdu ycdu) vectors.
+mean_c_mag:       Length of (mean_xc mean_yc) vector.
+
+incell[]:   For each basal body with matching foot, this contains
+            the index that the basal foot is in.
+            If it's not in any cell, it is -1.
+            This should be changed.  It should be in the last cell
+            which actually defines all areas outside any true cell.
+
+cex0[][] cey0[][] and cex1[][] cey1[]:
+--  The 0 values are basal bodies.
+--  The 1 values are basal feet.
+--  (cex0[i][] cey0[i][], cex1[i][] cey1[i][]) contain all
+    the basal body/foot pairs in cell i.
+--  For [i][j], the values represent basal body and
+    foot j in cell i.
+
+ce_ux[][] ce_uy[][]:
+--  The unit vectors of each basal body/foot pair in each cell.
+--  (ce_ux[i][] ce_uy[i][]) contains all the basal body/foot
+    pairs in cell i.
+
+cell_area[]:  The area of each cell.
+cell_cenfx[] cell_cenfy[]:  The center of the cell polygon plain figure.
+  As opposed to the center of the points defining the polygon's
+  vertices.
+
+
+cell_mean_vec_x[i] cell_mean_vec_y[i]:
+--  The mean of the basal body/foot unit vectors for cell i.
+cell_mean_vec_mag[i]:  The length of this mean vector.
+
+</pre>
+
+
+
+
+
+<!-- _____________________________________________________ -->
+<h3>The two lists of basal bodies (xba yba) and (xc0 yc0).</h3>
+
+
+<pre class="code1">
+(xba yba) is the full list.
+
+If (xba yba)[i] has a matching foot (xfa yfa)[ba_ib],
+then there is are array elements (xc0 yc0) and (xc1 yc1)
+such that
+  (xc0 yc0)[j] = (xba yba)[i]
+  (xc1 yc1)[j] = (xba yba)[ba_ib[i]]
+
+If the is no matching foot, then ba_ib = -1
+and there is no matching (xc0 yc0) or (xc1 yc1).
+
+</pre>
+
+
+
+
+
+
+<!-- _____________________________________________________ -->
+<h3>Variable used only for graphing.</h3>
+
+
+<pre class="code1">
+
+gr2_xc[] gr2_yc[]:  Alows graphing of basal feet as short lines.
+To do this, the contents of the array follow this pattern:
+  x0[0] x1[0] nan x0[1] x1[1] nan...
+  y0[0] y1[0] nan y0[1] y1[1] nan...
+
+
+</pre>
+
+
+
+
+
+<!-- _____________________________________________________ -->
+<h3>Changes being implemented in version 001d.</h3>
+
+
+<pre class="code1">
+
+-------------
+001d --- 001c
+-------------
+
+bab --- xba, yba
+baf --- xfa, yfa
+
+n_bab --- n_ba
+n_baf --- n_fa
+
+babfi --- ba_ib
+
+bafo
+  --- xc0 yc0      basal bodies with a matching foot
+  --- xc1 yc1      the matching foot.
+
+n_bafo --- n_bf
+
+xxx --- xcdu ycdu    no longer needed
+
+pcell  --- replaces much of the cell data
+n_pcell --- n_cell
+
+</pre>
+
+
+
+
+<!-- _____________________________________________________ -->
+<h3>Version 001d variables.</h3>
+
+
+<pre class="code1">
+
+
+</pre>
+
+
+
+
+
+
+
+
+<!-- _____________________________________________________ -->
+<h3>Stuff to check.</h3>
+
+
+<p>
+I think that, if the closest basal foot to a basal body is
+at the exact same place as the basal body, the vectors are
+set to (0 0).
+This needs to be checked.
+Maybe we should exclude these.
+Maybe there should be a minimum basal body / basal foot distance.
+</p>
+
+
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+

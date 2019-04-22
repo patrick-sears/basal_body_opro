@@ -1,0 +1,7 @@
+
+
+In basbo_main.py.
+- staring at line 496:
+  - Create versions using pogocell data.
+
+
