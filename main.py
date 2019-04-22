@@ -34,6 +34,8 @@ for l in f:
   elif key == '!fname_boundaries':   fname_boundaries = ll[1]
   elif key == '!fname_zgr1':   fname_zgr1 = ll[1]
   elif key == '!fname_zgr2':   fname_zgr2 = ll[1]
+  elif key == '!fname_z3':   fname_z3 = ll[1]
+  elif key == '!fname_z4':   fname_z4 = ll[1]
   #
   elif key == '!im_wh_px':
     im_w_px = int(ll[1])
@@ -706,7 +708,8 @@ ax.set_ylim( 0.0, im_h_um )
 plt.xlabel("μm", fontsize=20)
 plt.ylabel("μm", fontsize=20)
 
-plt.savefig('ztmp1.png', dpi=udpi)
+# plt.savefig('ztmp1.png', dpi=udpi)
+plt.savefig(fname_z3, dpi=udpi)
 
 
 
@@ -745,7 +748,8 @@ ax.set_ylim( 0.0, im_h_um )
 plt.xlabel("μm", fontsize=20)
 plt.ylabel("μm", fontsize=20)
 
-plt.savefig('ztmp2.png', dpi=udpi)
+# plt.savefig('ztmp2.png', dpi=udpi)
+plt.savefig(fname_z4, dpi=udpi)
 
 
 
