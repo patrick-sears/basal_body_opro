@@ -1,7 +1,7 @@
 #!/bin/bash
 echo
 
-prs_basal_body_opro "b00.config"
+prs-basal_body_opro "b00.config"
 
 echo
 

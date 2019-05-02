@@ -6,8 +6,9 @@ cd ..
 
 wd=`pwd -P`
 
-name="prs_basal_body_opro"
+name="basal_body_opro"
 libname="prs_basal_body_opro_lib.py"
+linkname="prs-$name"
 
 libdes=`python3 -m site --user-site`
 if ! [[ -e "$libdes" ]]; then
@@ -28,11 +29,11 @@ fi
 cd "$HOME/bin"
 
 
-if [[ -L "$name" ]]; then
-  unlink "$name"
+if [[ -L "$linkname" ]]; then
+  unlink "$linkname"
 fi
 
-ln -s "$wd/main.py" "$name"
+ln -s "$wd/main.py" "$linkname"
 
 
 echo "Install Done."
