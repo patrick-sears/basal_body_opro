@@ -18,6 +18,10 @@ udpi = 300.0
 
 # exec( open('g01_acc.py').read() )
 
+cell_basal_body_color = []
+n_cell_basal_body_color = 0
+cell_basal_body_color_default = '#aa0000'
+cell_basal_body_color_notcell  = '#dddddd'
 
 
 ############################################
@@ -55,9 +59,28 @@ for l in f:
   elif key == '!zgr1_body_color':  zgr1_body_color = ll[1]
   elif key == '!zgr1_foot_color':  zgr1_foot_color = ll[1]
   #
+  elif key == '!cell_basal_body_color_default':
+    ll = l.split(' ')
+    cell_basal_body_color_default = '#'+ll[1]
+  elif key == '!cell_basal_body_color_notcell':
+    ll = l.split(' ')
+    cell_basal_body_color_notcell = '#'+ll[1]
+  elif key == '!cell_basal_body_color':
+    for l in f:
+      l = l.strip()
+      if len(l) == 0:  break
+      if l[0] == '#':  continue
+      ll = l.split(' ')
+      cell_basal_body_color.append( '#'+ll[0] )
+  #
 f.close()
 ############################################
 
+n_cell_basal_body_color = len( cell_basal_body_color )
+
+### for i in range(n_cell_basal_body_color):
+###   print("> ", cell_basal_body_color[i])
+### exit(0)
 
 
 im_w_um = im_w_px * pixel_size_um
@@ -678,24 +701,35 @@ for ci in range(n_cell):
 
 print("n_cell_plus = ", n_cell_plus)
 # seven cells + outside = 8
-ce_color = [
-  '#4400cc',  # dark violet
-  '#0000dd',  # dark blue
-  '#0099ff',  # bright blue green
-  '#00ff00',  # green
-  '#ccff00',  # orange
-  '#ff0000',  # red
-  '#aa0000',  # dark red
-  '#dddddd',  # gray, not in any cell
-  ]
+### ce_color = [
+###   '#4400cc',  # dark violet
+###   '#0000dd',  # dark blue
+###   '#0099ff',  # bright blue green
+###   '#00ff00',  # green
+###   '#ccff00',  # orange
+###   '#ff0000',  # red
+###   '#aa0000',  # dark red
+###   '#dddddd',  # gray, not in any cell
+###   ]
 
 for i_ce in range(n_cell_plus):
-  # ax.plot( cex0[i_ce], cey0[i_ce], 'o', markeredgecolor='#00ff00', markerfacecolor='#00000000' )
-  # ax.plot( cex0[i_ce], cey0[i_ce], 'o', markeredgecolor='#000000', markerfacecolor=ce_color[i_ce], markersize=gr1_markersize )
+  if i_ce == n_cell:
+    ce_color = cell_basal_body_color_notcell
+  elif i_ce >= n_cell_basal_body_color:
+    ce_color = cell_basal_body_color_default
+  else:
+    ce_color = cell_basal_body_color[i_ce]
+  #
+  #  ax.plot(
+  #    cex0[i_ce], cey0[i_ce], 'o',
+  #    markeredgecolor=ce_color[i_ce],
+  #    markerfacecolor=ce_color[i_ce],
+  #    markersize=gr1_markersize,
+  #    )
   ax.plot(
     cex0[i_ce], cey0[i_ce], 'o',
-    markeredgecolor=ce_color[i_ce],
-    markerfacecolor=ce_color[i_ce],
+    markeredgecolor=ce_color,
+    markerfacecolor=ce_color,
     markersize=gr1_markersize,
     )
 
