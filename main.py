@@ -25,6 +25,14 @@ cell_basal_body_color_default = '#aa0000'
 cell_basal_body_color_notcell  = '#dddddd'
 
 
+if sys.argv[1] == '--version':
+  progd = os.path.dirname(os.path.realpath(__file__))
+  f = open( progd+'/version' )
+  for l in f:
+    l = l.rstrip()
+    print(l)
+  exit(0)
+
 ############################################
 f = open(sys.argv[1])
 for l in f:
