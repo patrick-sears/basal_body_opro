@@ -3,6 +3,7 @@
 import re
 import sys
 import math
+import os
 
 from matplotlib import pyplot as plt
 
@@ -104,7 +105,12 @@ f = open(fname_bbodies)
 f.readline()  # remove header
 for l in f:
   l = l.strip()
-  l = re.sub(' +', ' ', l)
+  # First find the delimiter.
+  # I think re.sub(' +', ' ')  works like this:
+  # ' +' means look any number of ' '
+  # ' ' means, replace with ' '
+  # l = re.sub(' +', ' ', l)
+  l = re.sub(r'\s+', ' ', l)  # all white space replaced by a single ' '
   ll = l.split(' ')
   if len(ll) != 3:
     print("Error:  ll != 3.")
@@ -159,7 +165,9 @@ for l in f:
     cell_n.append(0)
     pcell.append( basbo.pogocell() )
     continue
-  ll = l.split('\t')
+  # ll = l.split('\t')
+  l = re.sub(r'\s+', ' ', l)  # all white space replaced by a single ' '
+  ll = l.split(' ')
   #
   cellx[i].append( float(ll[0]) )
   celly[i].append( float(ll[1]) )
@@ -634,6 +642,15 @@ fz.close()
 # Graphing
 gr1_markersize = 2.8
 
+
+############################################
+# Useful for testing while working over ssh.
+if not 'DISPLAY' in os.environ:
+  print( "Didn't find DISPLAY environment variable." )
+  print( "  It's needed for matplotlib so exiting" )
+  print( "  before creating graphs.")
+  exit(0)
+############################################
 
 
 
