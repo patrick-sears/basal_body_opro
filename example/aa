@@ -1,7 +1,13 @@
 #!/bin/bash
 echo
 
-prs-basal_body_opro "b00.config"
+
+if [[ "_$1" = "_--version" ]]; then
+  prs-basal_body_opro --version
+else
+  prs-basal_body_opro "b00.config"
+fi
+
 
 echo
 
