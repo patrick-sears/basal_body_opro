@@ -104,7 +104,12 @@ f = open(fname_bbodies)
 f.readline()  # remove header
 for l in f:
   l = l.strip()
-  l = re.sub(' +', ' ', l)
+  # First find the delimiter.
+  # I think re.sub(' +', ' ')  works like this:
+  # ' +' means look any number of ' '
+  # ' ' means, replace with ' '
+  # l = re.sub(' +', ' ', l)
+  l = re.sub(r'\s+', ' ', l)  # all white space replaced by a single ' '
   ll = l.split(' ')
   if len(ll) != 3:
     print("Error:  ll != 3.")
@@ -159,7 +164,9 @@ for l in f:
     cell_n.append(0)
     pcell.append( basbo.pogocell() )
     continue
-  ll = l.split('\t')
+  # ll = l.split('\t')
+  l = re.sub(r'\s+', ' ', l)  # all white space replaced by a single ' '
+  ll = l.split(' ')
   #
   cellx[i].append( float(ll[0]) )
   celly[i].append( float(ll[1]) )
