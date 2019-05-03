@@ -3,6 +3,7 @@
 import re
 import sys
 import math
+import os
 
 from matplotlib import pyplot as plt
 
@@ -641,6 +642,15 @@ fz.close()
 # Graphing
 gr1_markersize = 2.8
 
+
+############################################
+# Useful for testing while working over ssh.
+if not 'DISPLAY' in os.environ:
+  print( "Didn't find DISPLAY environment variable." )
+  print( "  It's needed for matplotlib so exiting" )
+  print( "  before creating graphs.")
+  exit(0)
+############################################
 
 
 
