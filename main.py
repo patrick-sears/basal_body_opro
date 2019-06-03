@@ -676,11 +676,12 @@ gr1_markersize = 2.8
 
 ############################################
 # Useful for testing while working over ssh.
-if not 'DISPLAY' in os.environ:
-  print( "Didn't find DISPLAY environment variable." )
-  print( "  It's needed for matplotlib so exiting" )
-  print( "  before creating graphs.")
-  sys.exit(0)
+### if not 'DISPLAY' in os.environ:
+###   print( "Didn't find DISPLAY environment variable." )
+###   print( "  It's needed for matplotlib so exiting" )
+###   print( "  before creating graphs.")
+###   sys.exit(0)
+# Got rid of it because it was causing crash on MS-Windows.
 ############################################
 
 
