@@ -519,12 +519,22 @@ for i in range(n_cell_plus):
   cell_mean_vec_mag.append(0.0)
 for i in range(n_cell_plus):
   n = len( cex0[i] )
+  if n == 0:
+    print("Warning:  n == 0.")
+    print("  n = len( cex0[i] )")
+    print("  i = ", i)
+    print("  Are you sure the px/um is correct?")
+    # sys.exit(1)
   for j in range( n ):
     cell_mean_vec_x[i] += ce_ux[i][j]
     cell_mean_vec_y[i] += ce_uy[i][j]
   #
-  cell_mean_vec_x[i] /= n
-  cell_mean_vec_y[i] /= n
+  if n > 0:
+    cell_mean_vec_x[i] /= n
+    cell_mean_vec_y[i] /= n
+  else:
+    cell_mean_vec_x[i] = 0.0
+    cell_mean_vec_y[i] = 0.0
   cell_mean_vec_mag[i] = math.sqrt( (cell_mean_vec_x[i]**2) + (cell_mean_vec_y[i]**2) )
 #################################
 
@@ -602,6 +612,19 @@ for i in range(n_cell_plus):
   line += '\n'
 line += '------------\n'
 line += 'Last cell is actually for basal bodies in no cell.\n'
+line += '----------------------------------------------\n'
+line += '\n'
+line += '\n'
+line += '----------------------------------------------\n'
+line += 'Cell dimensions.\n'
+line += '------------\n'
+line += 'cell_id area(um^2) x_center(um) y_center(um)\n'
+for i in range(n_cell):
+  line += 'cell['+str(i)+']'
+  line += ' {0:0.6f}'.format( cell_area[i] )
+  line += ' {0:0.6f}'.format( cell_cenfx[i] )
+  line += ' {0:0.6f}'.format( cell_cenfy[i] )
+  line += '\n'
 line += '----------------------------------------------\n'
 line += '\n'
 fz.write(line)
