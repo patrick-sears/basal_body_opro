@@ -31,7 +31,7 @@ if sys.argv[1] == '--version':
   for l in f:
     l = l.rstrip()
     print(l)
-  exit(0)
+  sys.exit(0)
 
 ############################################
 f = open(sys.argv[1])
@@ -89,7 +89,7 @@ n_cell_basal_body_color = len( cell_basal_body_color )
 
 ### for i in range(n_cell_basal_body_color):
 ###   print("> ", cell_basal_body_color[i])
-### exit(0)
+### sys.exit(0)
 
 
 im_w_um = im_w_px * pixel_size_um
@@ -123,7 +123,7 @@ for l in f:
   if len(ll) != 3:
     print("Error:  ll != 3.")
     print("  ", l)
-    exit(1)
+    sys.exit(1)
   if ll[2] == indata_label_body:
     xba.append( float(ll[0]) )
     yba.append( float(ll[1]) )
@@ -136,7 +136,7 @@ for l in f:
   else:
     print("Error:  Unexpected ll[2].")
     print("  ll[2]:  ", ll[2])
-    exit(1)
+    sys.exit(1)
 f.close()
 ############################################
 
@@ -657,7 +657,7 @@ if not 'DISPLAY' in os.environ:
   print( "Didn't find DISPLAY environment variable." )
   print( "  It's needed for matplotlib so exiting" )
   print( "  before creating graphs.")
-  exit(0)
+  sys.exit(0)
 ############################################
 
 
