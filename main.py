@@ -614,6 +614,19 @@ line += '------------\n'
 line += 'Last cell is actually for basal bodies in no cell.\n'
 line += '----------------------------------------------\n'
 line += '\n'
+line += '\n'
+line += '----------------------------------------------\n'
+line += 'Cell dimensions.\n'
+line += '------------\n'
+line += 'cell_id area(um^2) x_center(um) y_center(um)\n'
+for i in range(n_cell):
+  line += 'cell['+str(i)+']'
+  line += ' {0:0.6f}'.format( cell_area[i] )
+  line += ' {0:0.6f}'.format( cell_cenfx[i] )
+  line += ' {0:0.6f}'.format( cell_cenfy[i] )
+  line += '\n'
+line += '----------------------------------------------\n'
+line += '\n'
 fz.write(line)
 fz.close()
 ############################################
