@@ -49,6 +49,7 @@ for l in f:
   elif key == '!fname_zgr2':   fname_zgr2 = ll[1]
   elif key == '!fname_z3':   fname_z3 = ll[1]
   elif key == '!fname_z4':   fname_z4 = ll[1]
+  elif key == '!fname_z5':   fname_z5 = ll[1]
   #
   elif key == '!im_wh_px':
     im_w_px = int(ll[1])
@@ -833,6 +834,37 @@ plt.ylabel("μm", fontsize=20)
 
 # plt.savefig('ztmp2.png', dpi=udpi)
 plt.savefig(fname_z4, dpi=udpi)
+
+
+
+
+
+#######################################################
+plt.clf()
+
+fig, ax = plt.subplots(figsize=ufigsize, dpi=udpi)
+
+for ci in range(n_cell):
+  ax.plot( cellx_closed[ci], celly_closed[ci], '-', color='#777777' )
+
+ax.plot( cell_cenfx, cell_cenfy, 'o', markeredgecolor='#000000', markerfacecolor='#ff9999' )
+
+for ci in range(n_cell):
+  ax.plot( gr_circ_x[ci], gr_circ_y[ci],
+    '-', color='#00aa00',
+    )
+  ax.plot( gr_cell_mean_vx, gr_cell_mean_vy,
+    '-', color='#0000aa',
+    )
+
+ax.set_aspect('equal')
+ax.set_xlim( 0.0, im_w_um )
+ax.set_ylim( 0.0, im_h_um )
+plt.xlabel("μm", fontsize=20)
+plt.ylabel("μm", fontsize=20)
+
+plt.savefig(fname_z5, dpi=udpi)
+
 
 
 
