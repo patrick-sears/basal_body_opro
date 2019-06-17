@@ -93,210 +93,200 @@ ul li.clah {
 
 
 
-
-
-
-
-
-
-
-
-
 <!-- _____________________________________________________ -->
-<h3>Defining cells.</h3>
-
-<ul>
-<li>The polygons defining a cell should not be closed.
-That is, the last point should not be identical to the first point.
-</li>
-<li>The points don't need to be given in order.
-They will be sorted and reordered by their polar coordinate angle with the range 0 to 2π.
-</li>
-<li>xxx</li>
-<li>xxx</li>
-</ul>
-
-
-
-
-<!-- _____________________________________________________ -->
-<h3>Variables in basbo_main.py.</h3>
-
-
-
-<pre class="code1">
-
-n_ba:          The number of basal bodies.
-xba[], yba[]:  The basal bodies.
-
-n_fa:          The number of basal feet.
-xfa[], yfa[]:  The basal feet.
-
-n_cell:            The number of cells.
-n_cell_plus:       The number of cells + 1.
-                   The extra one represents the area outside any cell.
-cellx[], celly[]:  Polygons points defining cell boundaries (not closed).
-cell_n:            The number of polygon points defining a cell boundary.
-
-cell_cenpx[], cell_cenpy[]:  Centroid of cell polygon points.
-
-cellx_closed[], celly_closed[]:
-Cell polygon points with an added point point identical to the first point.
-This is used for graphing.
-
-n_bf:          Number of basal bodies with a matching foot.
-xc0[], yc0[]:  Basal bodies that have a matching foot.
-xc1[], yc1[]:  The matching feet for each xc0[] yc0[].
-
-ba_ib[]:  For each basal foot xba[] yba[], this contains the index
-          of the matching foot xfa[] yfa[].
-          If that basal foot has not matching foot, it will be -1.
-
-xcdu[] ycdu[]:  Unit vectors for matching (basal body) → (basal foot).
-
-mean_xc mean_yc:  Mean of all (xcdu ycdu) vectors.
-mean_c_mag:       Length of (mean_xc mean_yc) vector.
-
-incell[]:   For each basal body with matching foot, this contains
-            the index that the basal foot is in.
-            If it's not in any cell, it is -1.
-            This should be changed.  It should be in the last cell
-            which actually defines all areas outside any true cell.
-
-cex0[][] cey0[][] and cex1[][] cey1[]:
---  The 0 values are basal bodies.
---  The 1 values are basal feet.
---  (cex0[i][] cey0[i][], cex1[i][] cey1[i][]) contain all
-    the basal body/foot pairs in cell i.
---  For [i][j], the values represent basal body and
-    foot j in cell i.
-
-ce_ux[][] ce_uy[][]:
---  The unit vectors of each basal body/foot pair in each cell.
---  (ce_ux[i][] ce_uy[i][]) contains all the basal body/foot
-    pairs in cell i.
-
-cell_area[]:  The area of each cell.
-cell_cenfx[] cell_cenfy[]:  The center of the cell polygon plain figure.
-  As opposed to the center of the points defining the polygon's
-  vertices.
-
-
-cell_mean_vec_x[i] cell_mean_vec_y[i]:
---  The mean of the basal body/foot unit vectors for cell i.
-cell_mean_vec_mag[i]:  The length of this mean vector.
-
-</pre>
-
-
-
-
-
-<!-- _____________________________________________________ -->
-<h3>The two lists of basal bodies (xba yba) and (xc0 yc0).</h3>
-
-
-<pre class="code1">
-(xba yba) is the full list.
-
-If (xba yba)[i] has a matching foot (xfa yfa)[ba_ib],
-then there is are array elements (xc0 yc0) and (xc1 yc1)
-such that
-  (xc0 yc0)[j] = (xba yba)[i]
-  (xc1 yc1)[j] = (xba yba)[ba_ib[i]]
-
-If the is no matching foot, then ba_ib = -1
-and there is no matching (xc0 yc0) or (xc1 yc1).
-
-</pre>
-
-
-
-
-
-
-<!-- _____________________________________________________ -->
-<h3>Variable used only for graphing.</h3>
-
-
-<pre class="code1">
-
-gr2_xc[] gr2_yc[]:  Alows graphing of basal feet as short lines.
-To do this, the contents of the array follow this pattern:
-  x0[0] x1[0] nan x0[1] x1[1] nan...
-  y0[0] y1[0] nan y0[1] y1[1] nan...
-
-
-</pre>
-
-
-
-
-
-<!-- _____________________________________________________ -->
-<h3>Changes being implemented in version 001d.</h3>
-
-
-<pre class="code1">
-
--------------
-001d --- 001c
--------------
-
-bab --- xba, yba
-baf --- xfa, yfa
-
-n_bab --- n_ba
-n_baf --- n_fa
-
-babfi --- ba_ib
-
-bafo
-  --- xc0 yc0      basal bodies with a matching foot
-  --- xc1 yc1      the matching foot.
-
-n_bafo --- n_bf
-
-xxx --- xcdu ycdu    no longer needed
-
-pcell  --- replaces much of the cell data
-n_pcell --- n_cell
-
-</pre>
-
-
-
-
-<!-- _____________________________________________________ -->
-<h3>Version 001d variables.</h3>
-
-
-<pre class="code1">
-
-
-</pre>
-
-
-
-
-
-
-
-
-<!-- _____________________________________________________ -->
-<h3>Stuff to check.</h3>
+<br><hr align="left" width="50%">
+<h3>Other documentation pages.</h3>
 
 
 <p>
-I think that, if the closest basal foot to a basal body is
-at the exact same place as the basal body, the vectors are
-set to (0 0).
-This needs to be checked.
-Maybe we should exclude these.
-Maybe there should be a minimum basal body / basal foot distance.
+<ul>
+<li><a href="pages1/code_doc.html">code_doc</a></li>
+<li><a href="xxx">xxx</a></li>
+<li><a href="xxx">xxx</a></li>
+<li><a href="xxx">xxx</a></li>
+</ul>
 </p>
 
 
+
+<!-- _____________________________________________________ -->
+<br><hr align="left" width="50%">
+<h3>Introduction.</h3>
+
+<p>
+The program <b>basal-body-opro</b> calculates ciliary orientations
+from basal body and basal foot locations.
+A user provides a file with these locations as x,y-coordinates.
+Basal-body-opro matches each basal body with the closest foot
+and calculates the ciliary orientation from those points.
+The user also provides coordinates for cell boundaries.
+The program uses these cell boundaries
+to calculate a mean orientation for each cell.
+</p>
+
+
+
+<!-- _____________________________________________________ -->
+<br><hr align="left" width="50%">
+<h3>Program configuration.</h3>
+
+<p>
+The program needs the user to set a number of parameters.
+The example contains a completely working configuration.
+Most of the parameters won't need to be changed.
+</p>
+
+<p>
+The parameters are all set in a configuration file.
+Here is part of the example file to help explain how it works:
+</p>
+
+
+<pre class="code1">
+# File name for the output image with cell centers marked.
+!fname_z5 z55.png
+
+# Image withd and height in pixels.
+# !im_wh_px 512 512
+!im_wh_px 1024 1024
+</pre>
+
+<p>
+There are two types of line.
+Lines starting with "#" are comments and are ignored by the program.
+Lines starting with "!" are configuration lines.
+Usually configuration lines appear in a "!key value" pair.
+In the example above the key "!fanme_z5" is set to "z55.png".
+Sometimes, a key is associated with two values.
+For example, key "!im_wh_px" has two values, both are set to "1024".
+Note putting a "#" in front of a key-value line turns it into a comment.
+Such lines are useful for keeping alternate values in the file without actually using them.
+</p>
+
+
+<p>
+Some keys have a more complicated pattern.
+For example,
+the key "!cell_basal_body_color"
+must be followed by a set of lines,
+each one starting with a color designation.
+</p>
+
+
+
+
+
+
+
+
+<!-- _____________________________________________________ -->
+<br><hr align="left" width="50%">
+<h3>The two cell centers.</h3>
+
+<p>
+In the following description two images are important.
+I'm going to call them <b>z4</b> and <b>z5</b> for short.
+In the configuration, they have keys fname_z4 and fname_z5.
+In the example, they are saved as z54.png and z55.png.
+</p>
+
+<p>
+<b>The "x" and "o" centers.</b>
+Looking at z4, each cell has a grey border
+defined by a number of vertices.
+For each cell, two centers are marked using an "x" and an "o".
+The "x" marks the center of the vertices.
+The "o" marks the center of the plane figure created by the cell border.
+In z5, only the "o" plane figure centers are shown.
+</p>
+
+<p>
+<b>The significance of the "x" center.</b>
+The "x" centers are used to verify that border construction was done correctly.
+For each cell, imagine lines going from the "x" center to each of the vertices for that cell.
+If none of these lines crosses the cell border, the border is valid.
+If one of these lines does cross a cell border,
+the user must change the points used for that cell and re-run the program.
+</p>
+
+<p>
+<b>The significance of the "o" center.</b>
+The "o" center marks the center of the plane figure created by the border.
+So it can be used as the true center of the cell.
+This can be useful as a measure of the distance between cells.
+Because the "o" center is the true cell center,
+the mean orientation vector for each cell is plotted at the "o" center.
+</p>
+
+<p>
+<b>Why two centers?</b>
+The "x" center is important in validating the cell borders,
+but otherwise it has no meaning.
+But the "x" center is easy to calculate
+and can be used to calculate the "o" center.
+So image z4 should be used to inspect the work as it's being done
+while the z5 image should be used for showing the results of the work.
+</p>
+
+
+
+
+
+<!-- _____________________________________________________ -->
+<br><hr align="left" width="50%">
+<h3>Defining the cell borders.</h3>
+
+<p>
+The vertices for each cell are defined by the user in one of the input files.
+In the configuration, that file has key fname_boundaries.
+In the example, the file name is e02_boundaries.data
+</p>
+
+<p>
+The input file  should have rows with the x and y coordinates for cell vertices.
+Here is an example for two cells:
+</p>
+
+<pre class="code1">
+X (um) Y (um)
+
+12.48 29.77      # First cell
+11.24 24.09
+16.12 20.69
+20.08 26.17
+18.4 29.05
+17.16 30.45
+
+21.04 25.25      # Second cell
+18.28 22.93
+17.68 21.73
+17.76 19.41
+18.92 16.49
+21.76 17.01
+24.04 18.65
+24.52 21.01
+22.04 24.45
+</pre>
+
+<p>
+Parts starting with "#" are just comments and are ignored.
+There is one line per vertex.
+The x and y values can be separated by a space or a tab.
+Cells are separated by blank lines.
+</p>
+
+<p>
+<b>I need to check the following to make sure this works.</b>
+The units used for x and y values can be either um or pixels.
+The chosen unit must be entered in the config file.
+Use one of these settings:
+</p>
+
+
+<pre class="code1">
+!indate_boundaries_units um
+!indate_boundaries_units px
+</pre>
 
 
 
